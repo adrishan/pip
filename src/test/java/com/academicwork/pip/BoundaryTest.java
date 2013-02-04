@@ -7,7 +7,6 @@ package com.academicwork.pip;
 import com.academicwork.pip.common.PipConfiguration;
 import com.academicwork.pip.reader.IPipReader;
 import com.academicwork.pip.reader.PipReaderImpl;
-import java.util.ArrayList;
 import java.util.List;
 import junit.framework.TestCase;
 
@@ -43,12 +42,12 @@ public class BoundaryTest extends TestCase {
     Point point = new Point(2, 7);
     
     Boundary instance = new Boundary(polygonPoints);
-    boolean pip = instance.isPointInPolygon(point);
+    boolean pip = instance.contains(point);
     assertTrue(pip);
     
     point.setX(3);
     point.setY(6);
-    pip = instance.isPointInPolygon(point);
+    pip = instance.contains(point);
     
     assertFalse(pip);
   }

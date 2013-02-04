@@ -4,54 +4,48 @@
  */
 package com.academicwork.pip;
 
-import java.awt.Polygon;
 import java.util.List;
 
 /**
- * Use this class to create Polygon from given points and 
- * to check certain points within Polygon region.
- * 
+ * Use this class to create Polygon from given points and to check certain points within Polygon
+ * region.
+ *
  * @author zeeshan
  */
 public class Boundary {
-  private Polygon polygon;
-  
+
+  private Point[] points;
+
   /**
    * Polygon will be get created upon calling of this constructor
-   * 
-   * @param polygonPoints 
+   *
+   * @param polygonPoints
    */
   public Boundary(List<Point> polygonPoints) {
-    createPolygon(polygonPoints);
+    points = new Point[polygonPoints.size()];
+    this.points = polygonPoints.toArray(points);
   }
-  
+
   /**
-   * Use this method to check certain point within Polygon.
-   * 
-   * @param point
-   * @return 
+   * Return true if the given point is contained inside the boundary.
+   *
+   *
+   * @param point The point to check
+   * @return true if the point is inside the boundary, false otherwise
+   *
    */
-  public boolean isPointInPolygon(Point point) {
-    return polygon.contains(point.getX(), point.getY());
-  }
-  
-  /**
-   * Creating polygon from given points
-   * 
-   * @param polygonPoints 
-   */
-  private void createPolygon(List<Point> polygonPoints) {
-    int len = polygonPoints.size();
-    int[] x = new int[len];
-    int[] y = new int[len];
-    
-    int index = 0;
-    for (Point point : polygonPoints) {
-      x[index] = point.getXInt();
-      y[index] = point.getYInt();
-      index++;
+  public boolean contains(Point point) {
+    int i;
+    int j;
+    boolean result = false;
+    for (i = 0, j = points.length - 1; i < points.length; j = i++) {
+      if ((points[i].getY() > point.getY()) != (points[j].getY() > point.getY())
+              && (point.getX() < (points[j].getX() - points[i].getX()) * 
+              (point.getY() - points[i].getY())
+              / (points[j].getY() - points[i].getY()) + points[i].getX())) {
+        result = !result;
+      }
     }
-    
-    polygon = new Polygon(x, y, len);
+    return result;
   }
 }

@@ -28,7 +28,7 @@ public class PipExec {
     Boundary boundary = new Boundary(polygonPoints);
     
     for (Point point : points) {
-      boolean isInside = boundary.isPointInPolygon(point);
+      boolean isInside = boundary.contains(point);
       if (isInside) {
         System.out.println("x=" + point.getX() + " and y= " + point.getY()
                 + "  are inside the Polygon");
